@@ -1,0 +1,19 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "katex/dist/katex.min.css";
+
+
+:root {
+  --brand-accent: #6f42c1;
+}
+
+body {
+  background: #f8f9fa;
+}
+
+.badge-verified {
+  background-color: #198754 !important;
+}
+
+.badge-unverified {
+  background-color: #6c757d !important;
+}

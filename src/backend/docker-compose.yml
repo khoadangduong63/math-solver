@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  math-teacher-api:
+    build: .
+    container_name: math-teacher-api
+    ports:
+      - "8000:8000"
+    environment:
+      LLM_TEXT_PROVIDER: "${LLM_TEXT_PROVIDER:-google_genai}"
+      LLM_TEXT_MODEL: "${LLM_TEXT_MODEL:-gemini-2.5-flash}"
+      LLM_TEXT_STRONGER_MODEL: "${LLM_TEXT_STRONGER_MODEL:-gemini-2.5-pro}"
+
+      LLM_VISION_PROVIDER: "${LLM_VISION_PROVIDER:-google_genai}"
+      LLM_VISION_MODEL: "${LLM_VISION_MODEL:-gemini-2.5-flash}"
+      LLM_VISION_STRONGER_MODEL: "${LLM_VISION_STRONGER_MODEL:-gemini-2.5-pro}"
+
+      GOOGLE_API_KEY: "${GOOGLE_API_KEY:-AIza...}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      GROQ_API_KEY: "${GROQ_API_KEY:-}"
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+
+      API_CORS_ORIGINS: "${API_CORS_ORIGINS:-*}"
+      LOG_LEVEL: "${LOG_LEVEL:-info}"
+
+    volumes:
+      - .:/app
+    restart: unless-stopped
