@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "922141209659",
+    "project_id": "math-solver-c9c9a",
+    "storage_bucket": "math-solver-c9c9a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922141209659:android:29f9d15a2c310e35b1581e",
+        "android_client_info": {
+          "package_name": "com.example.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaFRAGSCQwo9op9jucTTYZPY3xA05zk0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
