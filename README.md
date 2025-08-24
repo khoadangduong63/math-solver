@@ -3,16 +3,26 @@
 This project is a full-stack web application designed to demonstrate a modern architecture using **FastAPI** for the backend and **Next.js** for the frontend. It is containerized using Docker and orchestrated with Docker Compose so that both services can be started with a single command.
 
 ---
+### Results on flutter app
 
-## ⚠️ Note on Interview Requirements
+Below are the captured problems and their corresponding solutions:
 
-The original interview assignment requested that the frontend be implemented with **Flutter** and **Firebase**.
-
-I would like to sincerely apologize, as I do not currently have professional experience with Flutter or Firebase. Instead, I chose to implement the frontend using **Next.js**, a framework I am proficient in. This decision was made to ensure I could deliver a working, production-grade solution within the given timeframe.
+#### Problem and solution 1
+![Flutter 1](assets/flutter_1.png)
 
 ---
 
-### Results
+#### Problem and solution 2
+![Flutter 2](assets/flutter_2.png)
+
+---
+
+#### History
+![History 3](assets/flutter_history.png)
+
+---
+
+### Results on web
 
 Below are the captured problems and their corresponding solutions:
 
