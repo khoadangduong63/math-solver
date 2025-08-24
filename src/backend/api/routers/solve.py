@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException, status, Request
+from fastapi import APIRouter, UploadFile, File, HTTPException, status, Request, Depends
 from core.schemas import (
     TextSolveRequest,
     SolveResponse,
@@ -9,17 +9,27 @@ from core.schemas import (
 from reasoner.graph import get_workflow
 from providers.vision import solve_image_json
 from utils.image_ocr import extract_text
+from api.deps import get_current_user
+import structlog
+import io
+import os
+from PIL import Image, UnidentifiedImageError
+
+log = structlog.get_logger(__name__)
 
 router = APIRouter()
 
 
 @router.post("/solve-text", response_model=SolveResponse)
-async def solve_text(req: TextSolveRequest, request: Request):
-    try:
-        raw = await request.body()
-        print("[/solve-text] RAW BODY:", raw.decode("utf-8", errors="ignore")[:200])
-    except Exception:
-        pass
+async def solve_text(
+    req: TextSolveRequest, request: Request, uid: str = Depends(get_current_user)
+):
+    log.debug(
+        "solve_text.request",
+        uid=uid,
+        content_length=request.headers.get("content-length"),
+        user_agent=request.headers.get("user-agent"),
+    )
 
     q = (req.question or "").strip()
     if not q:
@@ -40,12 +50,39 @@ async def solve_text(req: TextSolveRequest, request: Request):
 
 
 @router.post("/solve-image", response_model=ImageSolveResponse)
-async def solve_image(file: UploadFile = File(...)):
-    if not file.content_type.startswith("image/"):
+async def solve_image(
+    file: UploadFile = File(...), uid: str = Depends(get_current_user)
+):
+    log.debug(
+        "solve_image.request",
+        uid=uid,
+        filename=file.filename,
+        content_type=file.content_type,
+    )
+    max_size = 5 * 1024 * 1024  # 5MB limit
+    file_size = getattr(file, "size", None)
+    if file_size is None:
+        file.file.seek(0, os.SEEK_END)
+        file_size = file.file.tell()
+        file.file.seek(0)
+    if file_size and file_size > max_size:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail="file too large",
+        )
+
+    img_bytes = await file.read()
+
+    try:
+        with Image.open(io.BytesIO(img_bytes)) as img:
+            mime_type = Image.MIME.get(img.format, "")
+    except UnidentifiedImageError:
+        mime_type = ""
+
+    if not mime_type.startswith("image/"):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="file must be an image"
         )
-    img_bytes = await file.read()
 
     # 1) OCR hint (weak)
     ocr_text, _ = await extract_text(img_bytes)

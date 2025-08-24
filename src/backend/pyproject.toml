@@ -16,7 +16,9 @@ dependencies = [
     "opencv-python (>=4.12.0.88,<5.0.0.0)",
     "pytesseract (>=0.3.13,<0.4.0)",
     "langchain-google-genai (>=2.1.9,<3.0.0)",
-    "langchain (>=0.3.27,<0.4.0)"
+    "langchain (>=0.3.27,<0.4.0)",
+    "firebase-admin (>=7.1.0,<8.0.0)",
+    "pillow (>=11.3.0,<12.0.0)"
 ]
 
 

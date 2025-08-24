@@ -27,6 +27,8 @@ class Settings(BaseSettings):
         "OLLAMA_BASE_URL", "http://host.docker.internal:11434"
     )
 
+    firebase_service_account_json: str = os.getenv("FIREBASE_SERVICE_ACCOUNT_JSON", "")
+
     # API / logging
     api_cors_origins: str = os.getenv("API_CORS_ORIGINS", "*")
     log_level: str = os.getenv("LOG_LEVEL", "info")
