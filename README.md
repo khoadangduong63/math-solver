@@ -146,6 +146,44 @@ The repository is organized into two main folders:
 
 ---
 
+## Run Flutter Mobile App (iOS Simulator)
+
+1. **Setup**
+
+   * Install [Flutter SDK](https://docs.flutter.dev/get-started/install/macos)
+   * Install **Xcode** (includes iOS Simulator)
+   * (Optional) `sudo gem install cocoapods`
+
+2. **Install dependencies**
+
+   ```bash
+   cd mobile
+   flutter pub get
+   cd ios && pod install && cd ..
+   ```
+
+3. **Start backend & frontend**
+
+   ```bash
+   docker compose up --build
+   ```
+
+   Backend runs at `http://localhost:8000`.
+
+4. **Run on iOS Simulator**
+
+   ```bash
+   open -a Simulator
+   flutter run -d ios --dart-define=API_BASE_URL=http://localhost:8000
+   ```
+
+5. **Using iOS Simulator**
+   * On the homepage, you will see an tab Solve by image.
+   * Click `Choose File` to select an image from your photos library.
+   * The frontend will send the image to the backend API, process it, and return the result.
+   * Processed output will be displayed directly on the page.
+
+---
 
 ## Conclusion
 
